@@ -1,45 +1,37 @@
+var wordsArray = function(sentence) {
+  return sentence.split(" ");
+};
+
+var lettersArray = function(words) {
+  return words.split("");
+};
+
+var sentenceProcessor = function(userSentence) {
+  var userWords = wordsArray(userSentence);
+  var newWords = [];
+  var newSentence = [];
+  userWords.forEach(function(word) {
+    var userLetters = lettersArray(word);
+    var newLetters = [];
+    var vowels = /[aeiouAEIOU]/;
+    userLetters.forEach(function(letter) {
+      if (vowels.test(letter)) {
+        newLetters.push("-");
+      } else {
+        newLetters.push(letter);
+      };
+    });
+    newWords = newLetters.join("");
+    newSentence.push(newWords);
+  });
+  return newSentence.join(" ");
+};
+
 $(document).ready(function() {
   $('#string-form').submit(function(event){
     event.preventDefault();
-
-    var userString = $('#string-input').val();
-    var userWordArr = userString.split(" ");
-    var vowelsArr = ['a','e','i','o','u'];
-    var newSentence = [];
-    var newLetters = [];
-    var newWord = [];
-    userWordArr.forEach(function(word) { // ["word","word"]
-      var userLetters = word.split(""); // ["w","o","r","d"]
-      userLetters.forEach(function(letter) {
-        var isVowel = false;
-        vowelsArr.forEach(function(vowel) { // makes newWord
-          if (vowel === letter) {
-            newLetters.push('-');
-            isVowel = true;
-          } else if (vowel === 'u' && !isVowel) {
-            newLetters.push(letter);
-          }
-        });
-      });
-      newSentence.push(newLetters.join(""));
-      console.log(newWord);
-      console.log(newSentence);
-      newLetters = []; // needed to empty here because variable wouldnt overwrite
-    });
-    newSentence = newSentence.join(" ");
-    alert(newSentence);
+    var userInput = $('#string-input').val();
+    var output = sentenceProcessor(userInput);
+    $('#user-output').text(output);
   });
 });
-
-
-
-
-    // userWordArr.forEach(word) {
-    //   var userLetters = word.split(""); // ['w','o','r','d']
-    //   userLetters.forEach(letter){
-    //     vowelArr.forEach(vowel);
-    //     if (letter === vowel) {
-    //
-    //     }
-    //   }
-    // }
